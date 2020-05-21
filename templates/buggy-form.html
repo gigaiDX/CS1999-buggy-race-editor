@@ -4,13 +4,37 @@
 
 {% block content %}
 
-  <h1>Make buggy</h1>
-  <form action="/new" method="post">
+  <h1>Make buggy (HORRIBLY WIP)</h1>
+  <form action="/new" method="post" id="buggybuild">
     <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" />
-    <input type="submit" class="button">
+    <input type="number" name="qty_wheels" required />
+  	<div>
+  		<label for="power_type">Primary motive power:</label> 
+  		<select id="power_type" name="power_type" form="buggybuild">
+			<option value = "petrol" selected>Petroleum-fuelled iternal combustion engine</option>
+			<option value = "fusion">Fusion reactor</option>
+			<option value = "steam">Steam engine</option>
+			<option value = "bio">Bio-fuelled internal combustion engine</option>
+			<option value = "electric">Lithium-ion battery</option>
+			<option value = "rocket">Rocket fuel</option>
+			<option value = "hamster">Hamster</option>
+			<option value = "thermo">Thermonuclear reactor</option>
+			<option value = "solar">Bank of solar panels</option>
+			<option value = "wind">Sailing rig</option>
+  		</select>
+  	</div>
+  	<div>	
+  		<label for="flag_color">Flag color:</label>
+  		<input type="text" name="flag_color" required/>
+  		<label for="flag_color_secondary">Flag secondary color:</label>
+  		<input type="text" name="flag_color_secondary" required/>
+  	</div>
+  	<div>
+    	<input type="submit" class="button" value="Submit new buggy">
+    </div>
   </form>
+
   <p>
-    <a href="/" class="button">home</a>
+    <a href="/" class="button">Back to home page</a>
    </p>
 {% endblock %}
