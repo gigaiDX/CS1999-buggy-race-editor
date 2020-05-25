@@ -28,7 +28,9 @@ con.execute("""
     id                    INTEGER PRIMARY KEY,
     qty_wheels            INTEGER DEFAUlT 4,
     power_type            VARCHAR(20) DEFAULT "petrol",
+    power_units           INTEGER DEFAULT 1,
     aux_power_type        VARCHAR(20),
+    aux_power_units       INTEGER DEFAULT 0,
     flag_color            VARCHAR(20) DEFAULT "white",
     flag_color_secondary  VARCHAR(20) DEFAULT "black",
     flag_pattern          VARCHAR(20)
