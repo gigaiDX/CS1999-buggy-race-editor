@@ -27,6 +27,7 @@ con.execute("""
   CREATE TABLE IF NOT EXISTS buggies (
     id                    INTEGER PRIMARY KEY,
     qty_wheels            INTEGER DEFAUlT 4,
+    tyres                 VARCHAR(20) DEFAULT "knobbly",
     power_type            VARCHAR(20) DEFAULT "petrol",
     power_units           INTEGER DEFAULT 1,
     aux_power_type        VARCHAR(20),

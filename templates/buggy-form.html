@@ -9,8 +9,16 @@
     <table>
       <tr>
         <td>
-         <label for="qty_wheels">Number of wheels:</label>
-         <input type="number" name="qty_wheels" required />
+          <label for="qty_wheels">Number of wheels:</label>
+          <input type="number" name="qty_wheels" required />
+          <label for="tyres">Type of tyres:</label> 
+          <select id="tyres" name="tyres" form="buggybuild" required>
+            <option value = "knobbly" selected>Knobbly</option>
+            <option value = "slick">Slick</option>
+            <option value = "steelband">Steelband</option>
+            <option value = "reactive">Reactive</option>
+            <option value = "maglev">Maglev</option>
+          </select>
         </td>
       </tr>
   	  <tr>
