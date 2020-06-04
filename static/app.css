@@ -42,9 +42,11 @@ a.button:hover {
   background-color: black;
   color: white;
 }
-input {
+
+input{
   padding: 0.5em;
   font-size:100%;
+  width: 200px;
 }
 input.button {
   background-color: #99ff99;
@@ -62,3 +64,4 @@ table td, table th {
 .spacer {
   margin: 3em 0;
 }
+

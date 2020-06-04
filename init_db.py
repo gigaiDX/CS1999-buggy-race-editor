@@ -28,6 +28,7 @@ con.execute("""
     id                    INTEGER PRIMARY KEY,
     qty_wheels            INTEGER DEFAUlT 4,
     tyres                 VARCHAR(20) DEFAULT "knobbly",
+    qty_tyres             INTEGER DEFAULT 4,
     power_type            VARCHAR(20) DEFAULT "petrol",
     power_units           INTEGER DEFAULT 1,
     aux_power_type        VARCHAR(20),
