@@ -26,17 +26,24 @@ def create_buggy():
     return render_template("buggy-form.html")
   elif request.method == 'POST':
     msg=""
+    qty_wheels = request.form['qty_wheels']
+    msg = f"qty_wheels={qty_wheels}" 
+    power_type = request.form['power_type']
+    power_units = request.form['power_units']
+    aux_power_type = request.form['aux_power_type']
+    aux_power_units = request.form['aux_power_units']
+    hamster_booster = request.form['hamster_booster']
+    flag_color = request.form['flag_color']
+    flag_color_secondary = request.form['flag_color_secondary']
+    flag_pattern = request.form['flag_pattern']
+    if qty_wheels.isdigit() == True:
+      if int(qty_wheels) % 2 != 0:
+        msg = f"Wheel quantity is not even (qty_wheels: {qty_wheels})"
+        return render_template("updated.html", msg = msg)
+    elif qty_wheels.isdigit() == False:
+      msg = f"Wheel quantity is not an integer (qty_wheels: {qty_wheels})"
+      return render_template("updated.html", msg = msg)
     try:
-      qty_wheels = request.form['qty_wheels']
-      msg = f"qty_wheels={qty_wheels}" 
-      power_type = request.form['power_type']
-      power_units = request.form['power_units']
-      aux_power_type = request.form['aux_power_type']
-      aux_power_units = request.form['aux_power_units']
-      hamster_booster = request.form['hamster_booster']
-      flag_color = request.form['flag_color']
-      flag_color_secondary = request.form['flag_color_secondary']
-      flag_pattern = request.form['flag_pattern']
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
         cur.execute("UPDATE buggies set qty_wheels=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=? WHERE id=?", 

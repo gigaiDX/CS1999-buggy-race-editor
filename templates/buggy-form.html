@@ -6,66 +6,80 @@
 
   <h1>Make buggy (HORRIBLY WIP)</h1>
   <form action="/new" method="post" id="buggybuild">
-    <label for="qty_wheels">Number of wheels:</label>
-    <input type="number" name="qty_wheels" required />
-  	<div>
-  		<label for="power_type">Primary motive power:</label> 
-  		<select id="power_type" name="power_type" form="buggybuild" required>
-			  <option value = "petrol" selected>Petroleum-fuelled iternal combustion engine</option>
-			  <option value = "fusion">Fusion reactor</option>
-			  <option value = "steam">Steam engine</option>
-			  <option value = "bio">Bio-fuelled internal combustion engine</option>
-			  <option value = "electric">Lithium-ion battery</option>
-			  <option value = "rocket">Rocket fuel</option>
-			  <option value = "hamster">Hamster</option>
-			  <option value = "thermo">Thermonuclear reactor</option>
-			  <option value = "solar">Bank of solar panels</option>
-			  <option value = "wind">Sailing rig</option>
-  		</select>
-  	</div>
-    <label for="power_units">Primary motive power units:</label>
-    <input type="number" name="power_units" required />
-    <div>
-      <label for="aux_power_type">Auxhiliary motive power:</label> 
-      <select id="aux_power_type" name="aux_power_type" form="buggybuild" required>
-        <option value = "petrol" selected>Petroleum-fuelled iternal combustion engine</option>
-        <option value = "fusion">Fusion reactor</option>
-        <option value = "steam">Steam engine</option>
-        <option value = "bio">Bio-fuelled internal combustion engine</option>
-        <option value = "electric">Lithium-ion battery</option>
-        <option value = "rocket">Rocket fuel</option>
-        <option value = "hamster">Hamster</option>
-        <option value = "thermo">Thermonuclear reactor</option>
-        <option value = "solar">Bank of solar panels</option>
-        <option value = "wind">Sailing rig</option>
-      </select>
-    </div>
-    <div>
-      <label for="aux_power_units">Auxhiliary primary motive power units:</label>
-      <input type="number" name="aux_power_units" required />
-    </div>
-    <div>
-      <label for="hamster_booster">Number of hamster boosters:</label>
-      <input type="number" name="hamster_booster" required />
-    </div>
-  	<div>	
-  		<label for="flag_color">Flag color:</label>
-  		<input type="text" name="flag_color" required/>
-  		<label for="flag_color_secondary">Flag secondary color:</label>
-  		<input type="text" name="flag_color_secondary" required/>
-      <label for="flag_pattern">Flag secondary color:</label>
-      <select id="flag_pattern" name="flag_pattern" form="buggybuild" required>
-        <option value="plain">Plain</option>
-        <option value="vstripe">Vertical Stripes</option>
-        <option value="hstripe">Horizontal Stripes</option>
-        <option value="dstripe">Diagonal Stripes</option>
-        <option value="checker">Checker</option>
-        <option value="spot">Spotted</option>
-      </select>
-  	</div>
-  	<div>
-    	<input type="submit" class="button" value="Submit new buggy">
-    </div>
+    <table>
+      <tr>
+        <td>
+         <label for="qty_wheels">Number of wheels:</label>
+         <input type="number" name="qty_wheels" required />
+        </td>
+      </tr>
+  	  <tr>
+        <td>
+  		    <label for="power_type">Primary motive power:</label> 
+  		    <select id="power_type" name="power_type" form="buggybuild" required>
+			     <option value = "petrol" selected>Petroleum-fuelled iternal combustion engine</option>
+			     <option value = "fusion">Fusion reactor</option>
+			     <option value = "steam">Steam engine</option>
+			     <option value = "bio">Bio-fuelled internal combustion engine</option>
+			     <option value = "electric">Lithium-ion battery</option>
+			     <option value = "rocket">Rocket fuel</option>
+			     <option value = "hamster">Hamster</option>
+			     <option value = "thermo">Thermonuclear reactor</option>
+			     <option value = "solar">Bank of solar panels</option>
+			     <option value = "wind">Sailing rig</option>
+  		    </select>
+         <label for="power_units">Primary motive power units:</label>
+         <input type="number" name="power_units" required />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="aux_power_type">Auxhiliary motive power:</label> 
+          <select id="aux_power_type" name="aux_power_type" form="buggybuild" required>
+            <option value = "petrol" selected>Petroleum-fuelled iternal combustion engine</option>
+            <option value = "fusion">Fusion reactor</option>
+            <option value = "steam">Steam engine</option>
+            <option value = "bio">Bio-fuelled internal combustion engine</option>
+            <option value = "electric">Lithium-ion battery</option>
+            <option value = "rocket">Rocket fuel</option>
+            <option value = "hamster">Hamster</option>
+            <option value = "thermo">Thermonuclear reactor</option>
+            <option value = "solar">Bank of solar panels</option>
+            <option value = "wind">Sailing rig</option>
+          </select>
+          <label for="aux_power_units">Auxhiliary primary motive power units:</label>
+          <input type="number" name="aux_power_units" required />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="hamster_booster">Number of hamster boosters:</label>
+          <input type="number" name="hamster_booster" required />
+        </td>
+      </tr>
+  	  <tr>
+        <td>
+  		    <label for="flag_color">Flag color:</label>
+  		    <input type="text" name="flag_color" required/>
+  		    <label for="flag_color_secondary">Flag secondary color:</label>
+  		    <input type="text" name="flag_color_secondary" required/>
+          <label for="flag_pattern">Flag pattern:</label>
+          <select id="flag_pattern" name="flag_pattern" form="buggybuild" required>
+            <option value="plain">Plain</option>
+            <option value="vstripe">Vertical Stripes</option>
+            <option value="hstripe">Horizontal Stripes</option>
+            <option value="dstripe">Diagonal Stripes</option>
+            <option value="checker">Checker</option>
+            <option value="spot">Spotted</option>
+          </select>
+        </td>
+  	  </tr>
+      <tr>
+        <td>
+    	   <input type="submit" class="button" value="Submit new buggy">
+        </td>
+      </tr>
+    </table>
   </form>
 
   <p>
