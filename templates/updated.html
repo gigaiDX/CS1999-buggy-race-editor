@@ -7,8 +7,15 @@
   <p>
     {{ msg }}
   </p>
-  <p>
+  <div class="spacer">
+    <button type="button" class="button" onclick = "goBack()">Back to editor</button>
+    <script>
+    	function goBack() {
+    		window.history.back()
+    	}
+    </script>
     <a href="/" class="button">Back to home page</a>
-  </p>
-
+    <a href="/buggy" class="button">See buggy</a>
+   </div>
+   
 {% endblock %}

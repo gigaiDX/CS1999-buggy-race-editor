@@ -23,13 +23,18 @@ def home():
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
   if request.method == 'GET':
-    return render_template("buggy-form.html")
+    with sql.connect(DATABASE_FILE) as con:
+      con.row_factory = sql.Row
+      cur = con.cursor()
+      cur.execute("SELECT * FROM buggies")
+      record = cur.fetchone(); 
+    return render_template("buggy-form.html", buggy = record)
+#Section to request data from form and set it to respective variables
   elif request.method == 'POST':
     msg=""
     qty_wheels = request.form['qty_wheels']
     tyres = request.form ['tyres']
     qty_tyres = request.form['qty_tyres']
-    msg = f"qty_wheels={qty_wheels}" 
     power_type = request.form['power_type']
     power_units = request.form['power_units']
     aux_power_type = request.form['aux_power_type']
@@ -38,17 +43,28 @@ def create_buggy():
     flag_color = request.form['flag_color']
     flag_color_secondary = request.form['flag_color_secondary']
     flag_pattern = request.form['flag_pattern']
-    if qty_wheels.isdigit() == True:
-      if int(qty_wheels) % 2 != 0:
-        msg = f"Wheel quantity is not even (qty_wheels: {qty_wheels})"
-        return render_template("updated.html", msg = msg)
-    elif qty_wheels.isdigit() == False:
-      msg = f"Wheel quantity is not an integer (qty_wheels: {qty_wheels})"
+#Validation section
+    try:
+      with sql.connect(DATABASE_FILE) as con:
+        if qty_wheels.isdigit() == True:
+          if int(qty_wheels) % 2 != 0:  
+            msg = f"Wheel quantity is not even (qty_wheels: {qty_wheels})"
+            raise ValueError("qty_wheels is not even")
+        elif qty_wheels.isdigit() == False:
+          msg = f"Wheel quantity is not an integer (qty_wheels: {qty_wheels})"
+          raise TypeError("qty_wheels not an integer") 
+        if qty_tyres.isdigit() == True:
+          if int(qty_tyres) < int(qty_wheels):
+            msg =f"Total number of tyres is less than number of wheels! (qty_tyres: {qty_tyres}, qty_wheels: {qty_wheels})"
+            raise ValueError("qty_tyres invalid - smaller than qty_wheels")
+        elif qty_tyres.isdigit() == True:
+          msg = f"Tyre quantity is not an integer (qty_tyres: {qty_tyres})"
+          raise TypeError("qty_tyres not an integer")
+    except:
+      con.rollback()
+      con.close()
       return render_template("updated.html", msg = msg)
-    if qty_tyres.isdigit() == True:
-      if int(qty_tyres) < int(qty_wheels):
-        msg =f"Total number of tyres is less than number of wheels! (qty_tyres: {qty_tyres}, qty_wheels: {qty_wheels})"
-        return render_template("updated.html", msg = msg)
+#Setting new values to database
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()

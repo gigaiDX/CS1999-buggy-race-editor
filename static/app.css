@@ -65,3 +65,17 @@ table td, table th {
   margin: 3em 0;
 }
 
+.button {
+  border:1px solid black;
+  padding:0.5em;
+  margin:0.5em;
+  border-radius: 0.25em;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  box-shadow: 5px 5px 5px #999999;
+}
+
+button {
+  font-size: 100%;
+}
