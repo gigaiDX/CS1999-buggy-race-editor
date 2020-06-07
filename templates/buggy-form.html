@@ -99,6 +99,14 @@
             <option value="thicksteel" {% if buggy['armour'] == "thicksteel" %} selected {% endif %}>Thick Steel</option>
             <option value="titanium" {% if buggy['armour'] == "titanium" %} selected {% endif %}>Titanium</option>
           </select>
+          <label for="attack">Armour type:</label>
+          <select id="attack" name="attack" form="buggybuild" required>
+            <option value="none" {% if buggy['attack'] == "none" %} selected {% endif %}>None</option>
+            <option value="spike" {% if buggy['attack'] == "spike" %} selected {% endif %}>Spike</option>
+            <option value="flame" {% if buggy['attack'] == "flame" %} selected {% endif %}>Flame</option>
+            <option value="charge" {% if buggy['attack'] == "charge" %} selected {% endif %}>Charge</option>
+            <option value="biohazard" {% if buggy['attack'] == "biohazard" %} selected {% endif %}>Biohazard</option>
+          </select>
         </td>
       </tr>
       <tr>
