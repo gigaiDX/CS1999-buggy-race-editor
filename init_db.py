@@ -36,7 +36,8 @@ con.execute("""
     hamster_booster       INTEGER DEFAULT 0,
     flag_color            VARCHAR(20) DEFAULT "white",
     flag_color_secondary  VARCHAR(20) DEFAULT "black",
-    flag_pattern          VARCHAR(20)
+    flag_pattern          VARCHAR(20) DEFAULT "plain",
+    armour                VARCHAR(20) DEFAULT "none"
   )
 
 """)
