@@ -107,6 +107,8 @@
             <option value="charge" {% if buggy['attack'] == "charge" %} selected {% endif %}>Charge</option>
             <option value="biohazard" {% if buggy['attack'] == "biohazard" %} selected {% endif %}>Biohazard</option>
           </select>
+          <label for="qty_attacks">Number of attacks:</label>
+          <input type="number" name="qty_attacks" value={{ buggy['qty_attacks'] }} required />
         </td>
       </tr>
       <tr>

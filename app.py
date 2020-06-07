@@ -45,6 +45,7 @@ def create_buggy():
     flag_pattern = request.form['flag_pattern']
     armour = request.form['armour']
     attack = request.form['attack']
+    qty_attacks = request.form['qty_attacks']
 #Validation section
     try:
       with sql.connect(DATABASE_FILE) as con:
@@ -70,8 +71,8 @@ def create_buggy():
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=? WHERE id=?", 
-          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=? WHERE id=?", 
+          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except:
