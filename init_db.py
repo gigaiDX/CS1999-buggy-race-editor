@@ -39,7 +39,8 @@ con.execute("""
     flag_pattern          VARCHAR(20) DEFAULT "plain",
     armour                VARCHAR(20) DEFAULT "none",
     attack                VARCHAR(20) DEFAULT "none",
-    qty_attacks           INTEGER DEFAULT 0
+    qty_attacks           INTEGER DEFAULT 0,
+    fireproof             BIT DEFAULT 0
   )
 
 """)

@@ -46,10 +46,11 @@ a.button:hover {
 input{
   padding: 0.5em;
   font-size:100%;
-  width: 200px;
+  width: 50px;
 }
 input.button {
   background-color: #99ff99;
+  width: 200px;
 }
 table {
   border:1px solid black;
@@ -64,7 +65,6 @@ table td, table th {
 .spacer {
   margin: 3em 0;
 }
-
 .button {
   border:1px solid black;
   padding:0.5em;
@@ -75,7 +75,10 @@ table td, table th {
   color: black;
   box-shadow: 5px 5px 5px #999999;
 }
-
 button {
+  font-size: 100%;
+}
+select {
+  height: 50px;
   font-size: 100%;
 }

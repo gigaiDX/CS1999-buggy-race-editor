@@ -113,6 +113,15 @@
       </tr>
       <tr>
         <td>
+          Fireproof?
+          <input type="radio" name="fireproof" value=1 {% if buggy['fireproof'] == "true" %} checked {% endif %}/>
+          <label for="fireproof">Yes</label>
+          <input type="radio" name="fireproof" value=0 {% if buggy['fireproof'] == "false" %} checked {% endif %}/>
+          <label for="fireproof">No</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
     	   <input type="submit" class="button" value="Submit new buggy">
         </td>
       </tr>
