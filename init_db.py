@@ -41,7 +41,8 @@ con.execute("""
     attack                VARCHAR(20) DEFAULT "none",
     qty_attacks           INTEGER DEFAULT 0,
     fireproof             BIT DEFAULT 0,
-    insualted             BIT DEFAULT 0
+    insulated             BIT DEFAULT 0,
+    antibiotic            BIT DEFAULT 0
   )
 
 """)

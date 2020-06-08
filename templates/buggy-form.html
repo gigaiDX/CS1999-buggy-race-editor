@@ -114,16 +114,23 @@
       <tr>
         <td>
           Fireproof?
-          <input type="radio" name="fireproof" value=1 {% if buggy['fireproof'] == "true" %} checked {% endif %}/>
+          <input type="radio" name="fireproof" value=1 {% if buggy['fireproof'] == 1 %} checked {% endif %}/>
           <label for="fireproof">Yes</label>
-          <input type="radio" name="fireproof" value=0 {% if buggy['fireproof'] == "false" %} checked {% endif %}/>
+          <input type="radio" name="fireproof" value=0 {% if buggy['fireproof'] == 0 %} checked {% endif %}/>
           <label for="fireproof">No</label>
-          <br>
+          <br/>
           Insulated?
-          <input type="radio" name="insulated" value=1 {% if buggy['insulated'] == "true" %} checked {% endif %}/>
+          <input type="radio" name="insulated" value=1 {% if buggy['insulated'] == 1 %} checked {% endif %}/>
           <label for="insulated">Yes</label>
-          <input type="radio" name="insulated" value=0 {% if buggy['insulated'] == "false" %} checked {% endif %}/>
+          <input type="radio" name="insulated" value=0 {% if buggy['insulated'] == 0 %} checked {% endif %}/>
           <label for="insulated">No</label>
+          <br/>
+          Antibiotic?
+          <input type="radio" name="antibiotic" value=1 {% if buggy['antibiotic'] == 1 %} checked {% endif %}/>
+          <label for="antibiotic">Yes</label>
+          <input type="radio" name="antibiotic" value=0 {% if buggy['antibiotic'] == 0 %} checked {% endif %}/>
+          <label for="antibiotic">No</label>
+          <br/>
         </td>
       </tr>
       <tr>
