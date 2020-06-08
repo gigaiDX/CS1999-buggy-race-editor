@@ -7,7 +7,7 @@ DATABASE_FILE = "database.db"
 
 def upgrade():
 	with sql.connect(DATABASE_FILE) as con:
-		con.execute("ALTER TABLE buggies ADD COLUMN fireproof BIT;")
+		con.execute("ALTER TABLE buggies ADD COLUMN insulated BIT;")
 
 def downgrade() :
 	with sql.connect(DATABASE_FILE) as con:
@@ -27,12 +27,13 @@ def downgrade() :
     		flag_pattern          VARCHAR(20) DEFAULT "plain",
     		armour                VARCHAR(20) DEFAULT "none",
     		attack                VARCHAR(20) DEFAULT "none",
-    		qty_attacks           INTEGER DEFAULT 0
+    		qty_attacks           INTEGER DEFAULT 0,
+    		fireproof             BIT DEFAULT 0
   		  )
 		""")
 		con.execute("""
-			INSERT into dummy(id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks)
-			SELECT id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks
+			INSERT into dummy(id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof)
+			SELECT id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof
 			FROM buggies;
 			""")
 		con.execute("DROP TABLE buggies;")

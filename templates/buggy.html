@@ -42,7 +42,10 @@
      <td>Number of attacks:</td> <td> {{ buggy['qty_attacks'] }} </td>
     </tr>
    <tr>
-     <td>Fireproof:</td> <td> {{ buggy['fireproof'] }} </td>
+     <td>Fireproof:</td> <td> {% if buggy['fireproof']==1 %} True {% elif buggy['fireproof']==0 %} False {% endif %} </td>
+    </tr>
+   <tr>
+     <td>Insulated:</td> <td> {% if buggy['insulated']==1 %} True {% elif buggy['insulated']==0 %} False {% endif %} </td>
     </tr>
    <tr>
      <td>Flag color:</td> <td> {{ buggy['flag_color'] }} </td>

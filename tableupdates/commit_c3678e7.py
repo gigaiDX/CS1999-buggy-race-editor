@@ -1,7 +1,7 @@
 #This is a ridiculous test if I can do things properly - here's to hoping
 import sqlite3 as sql
 
-#current commit
+#commit c3678e7
 	
 DATABASE_FILE = "database.db"
 
