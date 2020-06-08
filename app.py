@@ -51,11 +51,13 @@ def create_buggy():
     antibiotic = request.form['antibiotic']
     banging = request.form['banging']
     algo = request.form['algo']
+    total_cost=0
+
 #Validation section
     try:
       with sql.connect(DATABASE_FILE) as con:
         if qty_wheels.isdigit() == True:
-          if int(qty_wheels) % 2 != 0:  
+          if int(qty_wheels) % 2 != 0:
             msg = f"Wheel quantity is not even (qty_wheels: {qty_wheels})"
             raise ValueError("qty_wheels is not even")
         elif qty_wheels.isdigit() == False:
@@ -63,21 +65,64 @@ def create_buggy():
           raise TypeError("qty_wheels not an integer") 
         if qty_tyres.isdigit() == True:
           if int(qty_tyres) < int(qty_wheels):
-            msg =f"Total number of tyres is less than number of wheels! (qty_tyres: {qty_tyres}, qty_wheels: {qty_wheels})"
+            msg = f"Total number of tyres is less than number of wheels! (qty_tyres: {qty_tyres}, qty_wheels: {qty_wheels})"
             raise ValueError("qty_tyres invalid - smaller than qty_wheels")
         elif qty_tyres.isdigit() == True:
           msg = f"Tyre quantity is not an integer (qty_tyres: {qty_tyres})"
           raise TypeError("qty_tyres not an integer")
+        cur = con.cursor()
+        cur.execute("SELECT name, consumable FROM powerDetail")
+        record = cur.fetchall();
+        for row in record:
+          if row[0] == power_type:
+            if row[1] == 0:
+              if int(power_units) != 1:
+                msg = f"Chosen power type is not consumable - unit must be 1!"
+                raise ValueError("power_units should be 1")
+          elif row[0] == aux_power_type:
+            if row[1] == 0:
+              if int(aux_power_units) != 1:
+                msg = f"Chosen auxhiliary power type is not consumable - unit must be 1!"
+                raise ValueError("aux_power_units should be 1")
+#Calculating cost
+        cur.execute("SELECT name, cost FROM powerDetail")
+        record = cur.fetchall();
+        print("Fetching power costs")
+        for row in record:
+          if row[0] == power_type:
+            powerCost = row[1]
+          elif row[0] == aux_power_type:
+            auxpowerCost = row[1]
+        cur.execute("SELECT name, cost FROM tyreDetail")
+        record = cur.fetchall();
+        print("Fetching tyre costs")
+        for row in record:
+          if row[0] == tyres:
+            tyreCost = row[1]
+        cur.execute("SELECT name, cost FROM armourDetail")
+        record = cur.fetchall();
+        print("Fetching armour costs")
+        for row in record:
+          if row[0] == armour:
+            armourCost = row[1]
+        cur.execute("SELECT name, cost FROM attackDetail")
+        record = cur.fetchall();
+        print("Fetching attack costs")
+        for row in record:
+          if row[0] == attack:
+            attackCost = row[1]
+        total_cost = (powerCost * int(power_units)) + (auxpowerCost * int(aux_power_units)) + (5 * int(hamster_booster)) + (70 * int(fireproof)) + (100 * int(insulated)) + (90 * int(antibiotic)) + (42 * int(banging)) + (tyreCost * int(qty_tyres)) + (armourCost + (armourCost *(0.1*(int(qty_wheels)-4)))) + (attackCost * int(qty_attacks))
     except:
       con.rollback()
       con.close()
       return render_template("updated.html", msg = msg)
+
 #Setting new values to database
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?", 
-          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, total_cost=? WHERE id=?", 
+          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except:
