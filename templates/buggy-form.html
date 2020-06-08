@@ -99,7 +99,7 @@
             <option value="thicksteel" {% if buggy['armour'] == "thicksteel" %} selected {% endif %}>Thick Steel</option>
             <option value="titanium" {% if buggy['armour'] == "titanium" %} selected {% endif %}>Titanium</option>
           </select>
-          <label for="attack">Armour type:</label>
+          <label for="attack">Attack type:</label>
           <select id="attack" name="attack" form="buggybuild" required>
             <option value="none" {% if buggy['attack'] == "none" %} selected {% endif %}>None</option>
             <option value="spike" {% if buggy['attack'] == "spike" %} selected {% endif %}>Spike</option>
@@ -137,6 +137,15 @@
           <input type="radio" name="banging" value=0 {% if buggy['banging'] == 0 %} checked {% endif %}/>
           <label for="banging">No</label>
           <br/>
+          <label for="algo">Race computer algorithm:</label>
+          <select id="algo" name="algo" form="buggybuild" required>
+            <option value="steady" {% if buggy['algo'] == "steady" %} selected {% endif %}>Steady</option>
+            <option value="defensive" {% if buggy['algo'] == "defensive" %} selected {% endif %}>Defensive</option>
+            <option value="offensive" {% if buggy['algo'] == "offensive" %} selected {% endif %}>Offensive</option>
+            <option value="titfortat" {% if buggy['algo'] == "titfortat" %} selected {% endif %}>Tit-for-tat</option>
+            <option value="random" {% if buggy['algo'] == "random" %} selected {% endif %}>Random</option>
+            <option value="buggy" {% if buggy['algo'] == "buggy" %} selected {% endif %} disabled>Buggy</option>
+          </select>
         </td>
       </tr>
       <tr>

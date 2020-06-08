@@ -1,13 +1,13 @@
 #This is a ridiculous test if I can do things properly - here's to hoping
 import sqlite3 as sql
 
-#current commit
+#commit 77d388b
 	
 DATABASE_FILE = "database.db"
 
 def upgrade():
 	with sql.connect(DATABASE_FILE) as con:
-		con.execute("ALTER TABLE buggies ADD COLUMN algo VARCHAR(20);")
+		con.execute("ALTER TABLE buggies ADD COLUMN banging BIT;")
 
 def downgrade() :
 	with sql.connect(DATABASE_FILE) as con:
@@ -30,13 +30,12 @@ def downgrade() :
     		qty_attacks           INTEGER DEFAULT 0,
     		fireproof             BIT DEFAULT 0,
     		insulated             BIT DEFAULT 0,
-    		antibiotic            BIT DEFAULT 0,
-    		banging               BIT DEFAULT 0
+    		antibiotic            BIT DEFAULT 0
   		  )
 		""")
 		con.execute("""
-			INSERT into dummy(id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging)
-			SELECT id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging
+			INSERT into dummy(id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic)
+			SELECT id, qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic
 			FROM buggies;
 			""")
 		con.execute("DROP TABLE buggies;")

@@ -44,6 +44,7 @@ con.execute("""
     insulated             BIT DEFAULT 0,
     antibiotic            BIT DEFAULT 0,
     banging               BIT DEFAULT 0,
+    algo                  VARCHAR(20) DEFAULT "steady"
   )
 
 """)
