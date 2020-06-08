@@ -42,7 +42,8 @@ con.execute("""
     qty_attacks           INTEGER DEFAULT 0,
     fireproof             BIT DEFAULT 0,
     insulated             BIT DEFAULT 0,
-    antibiotic            BIT DEFAULT 0
+    antibiotic            BIT DEFAULT 0,
+    banging               BIT DEFAULT 0,
   )
 
 """)
