@@ -5,23 +5,32 @@
   <h1>
     Buggy Editor: James Edition (with all new <strong>Funky Mode</strong>)
   </h1>
-
+<body>
   <div class="spacer">
     <a href="/new" class="button">Make buggy</a>
     <a href="/buggy" class="button">Show buggy</a>
   </div>
 
   <p>
-    Use this editor to specify a racing buggy. The editor saves it in its
-    little database and generates JSON data for the buggy. This is the data you
-    need to supply when you log into the
-    <strong><a href="{{ server_url }}">race server</a></strong> and enter your
-    buggy into the next race.
+    Introducing the greatest buggy editor man has ever seen.* Create as many buggies as you wish,
+    they'll be stored in a neat little database and the JSON for them can even be fetched!**
+    <br>
+    Once you're done creating, grab that JSON and login to the <strong><a href="{{ server_url }}">race server</a></strong>
+    and enter your buggy into the next race.***
   </p>
   <p>
-    Remember that if your data is not accepted by the race server, your buggy
-    will be disqualified from that race... so make sure you program your editor
-    correctly.
+    Make sure that buggy is tournament legal - most rulings should be handled automatically, but 
+    it's always important to make sure!
   </p>
-
+  <div style="position: absolute; bottom: 0px; left: 100px;height: 175px; width:500px">
+    <p style= "color:#bababa;">
+    *Claim is not legally binding. Please do not sue.
+    <br>
+    **50% of the time, your buggies will be stored safe and sound all the time. Unconfirmed non-zero percent chance of sudden combustion of data.
+    <br>
+    ***Winning is not guaranteed by using this buggy editor. Again, please do not sue.
+    </p>
+  </div>
+  <img src="../static/roadent.png" class="roadent">
+</body>
 {% endblock %}
