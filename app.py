@@ -84,6 +84,7 @@ def create_buggy():
               if int(aux_power_units) != 1:
                 msg = f"Chosen auxhiliary power type is not consumable - unit must be 1!"
                 raise ValueError("aux_power_units should be 1")
+
 #Calculating cost
         cur.execute("SELECT name, cost FROM powerDetail")
         record = cur.fetchall();
@@ -117,12 +118,14 @@ def create_buggy():
       con.close()
       return render_template("updated.html", msg = msg)
 
-#Setting new values to database
+#Creating/Inserting data of new buggy in database
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, total_cost=? WHERE id=?", 
-          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost, DEFAULT_BUGGY_ID))
+        cur.execute("""
+          INSERT INTO buggies (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost) 
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+          """,(qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost))
         con.commit()
         msg = "Record successfully saved"
     except:
@@ -141,15 +144,17 @@ def show_buggies():
   con.row_factory = sql.Row
   cur = con.cursor()
   cur.execute("SELECT * FROM buggies")
-  record = cur.fetchone(); 
-  return render_template("buggy.html", buggy = record)
+  record = cur.fetchall(); 
+  return render_template("buggy.html", buggies = record)
 
 #------------------------------------------------------------
-# a page for displaying the buggy
+# a page for editing the buggy
 #------------------------------------------------------------
-@app.route('/new')
+@app.route('/edit')
 def edit_buggy():
   return render_template("buggy-form.html")
+  #      cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, total_cost=? WHERE id=?", 
+  #        (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost, DEFAULT_BUGGY_ID))
 
 
 #------------------------------------------------------------
