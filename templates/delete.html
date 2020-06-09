@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Delete Buggy No. {{ buggy_id }}</h1>
+
+  <p>
+    Are you sure?
+  </p>
+  <div class="spacer">
+    <form action="/delete/{{ buggy['id'] }}" method="POST" class="tablespacer">
+      <input class="button" type="submit" value="Delete"></a>
+    </form>
+    <br>
+    <a href="/" class="button">Back to home page</a>
+    <a href="/buggy" class="button">See buggies</a>
+   </div>
+
+{% endblock %}

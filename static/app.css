@@ -65,6 +65,9 @@ table td, table th {
 .spacer {
   margin: 3em 0;
 }
+.tablespacer {
+  margin: 1em 0;
+}
 .button {
   border:1px solid black;
   padding:0.5em;

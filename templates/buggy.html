@@ -69,9 +69,15 @@
    <tr>
      <td>Total cost:</td> <td> {{ buggy['total_cost'] }} </td>
     </tr>
-   <!--<tr>
-     <td colspan="2"> <a href="/edit/{{ buggy['id'] }}"> Edit me! </a> </td>
-    </tr>-->
+   <tr>
+     <td colspan="2">
+      <div class="tablespacer">
+        <a class="button" href="/edit/{{ buggy['id'] }}"> Edit me! </a>
+        <a class="button" href="/json/{{ buggy['id'] }}"> Get JSON </a>
+        <a class="button" href="/delete/{{ buggy['id'] }}"> Delete</a>
+      </div>
+      </td>
+    </tr>
   </table>
 {% endfor %}
   <p>

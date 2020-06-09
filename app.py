@@ -23,15 +23,11 @@ def home():
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
   if request.method == 'GET':
-    with sql.connect(DATABASE_FILE) as con:
-      con.row_factory = sql.Row
-      cur = con.cursor()
-      cur.execute("SELECT * FROM buggies")
-      record = cur.fetchone(); 
-    return render_template("buggy-form.html", buggy = record)
+    return render_template("buggy-form.html", buggy = None)
 #Section to request data from form and set it to respective variables
   elif request.method == 'POST':
     msg=""
+    buggy_id = request.form['id']
     qty_wheels = request.form['qty_wheels']
     tyres = request.form ['tyres']
     qty_tyres = request.form['qty_tyres']
@@ -122,10 +118,14 @@ def create_buggy():
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("""
-          INSERT INTO buggies (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost) 
-          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-          """,(qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost))
+        if buggy_id.isdigit():
+          cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, total_cost=? WHERE id=?", 
+          (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost, buggy_id))
+        else:
+          cur.execute("""
+            INSERT INTO buggies (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost) 
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """,(qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost))
         con.commit()
         msg = "Record successfully saved"
     except:
@@ -150,11 +150,15 @@ def show_buggies():
 #------------------------------------------------------------
 # a page for editing the buggy
 #------------------------------------------------------------
-@app.route('/edit')
-def edit_buggy():
-  return render_template("buggy-form.html")
-  #      cur.execute("UPDATE buggies set qty_wheels=?, tyres=?, qty_tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, flag_color=?, flag_color_secondary=?, flag_pattern=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=?, total_cost=? WHERE id=?", 
-  #        (qty_wheels, tyres, qty_tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, flag_color, flag_color_secondary, flag_pattern, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, total_cost, DEFAULT_BUGGY_ID))
+@app.route('/edit/<buggy_id>', methods=['POST', 'GET'])
+def edit_buggy(buggy_id):
+    with sql.connect(DATABASE_FILE) as con:
+      con.row_factory = sql.Row
+      cur = con.cursor()
+      cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id))
+      record = cur.fetchone(); 
+      return render_template("buggy-form.html", buggy=record)
+
 
 
 #------------------------------------------------------------
@@ -163,12 +167,12 @@ def edit_buggy():
 #   using it because we'll be dipping diectly into the
 #   database
 #------------------------------------------------------------
-@app.route('/json')
-def summary():
+@app.route('/json/<buggy_id>')
+def summary(buggy_id):
   con = sql.connect(DATABASE_FILE)
   con.row_factory = sql.Row
   cur = con.cursor()
-  cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
+  cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (buggy_id))
   return jsonify(
       {k: v for k, v in dict(zip(
         [column[0] for column in cur.description], cur.fetchone())).items()
@@ -182,21 +186,30 @@ def summary():
 #   there always being a record to update (because the
 #   student needs to change that!)
 #------------------------------------------------------------
-@app.route('/delete', methods = ['POST'])
-def delete_buggy():
-  try:
-    msg = "deleting buggy"
-    with sql.connect(DATABASE_FILE) as con:
-      cur = con.cursor()
-      cur.execute("DELETE FROM buggies")
-      con.commit()
-      msg = "Buggy deleted"
-  except:
-    con.rollback()
-    msg = "error in delete operation"
-  finally:
-    con.close()
-    return render_template("updated.html", msg = msg)
+@app.route('/delete/<buggy_id>', methods = ['GET','POST'])
+def delete_buggy(buggy_id):
+  if request.method == 'GET':
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id))
+    record = cur.fetchone(); 
+    return render_template("delete.html", buggy_id = buggy_id, buggy = record)
+  if request.method == 'POST':
+    try:
+      msg = "deleting buggy"
+      print(msg)
+      with sql.connect(DATABASE_FILE) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id))
+        con.commit()
+        msg = "Buggy deleted"
+    except:
+      con.rollback()
+      msg = "error in delete operation"
+    finally:
+      con.close()
+      return render_template("updated.html", msg = msg)
 
 
 if __name__ == '__main__':
