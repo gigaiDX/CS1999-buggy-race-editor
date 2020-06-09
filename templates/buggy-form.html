@@ -161,16 +161,16 @@
     </div>
     <div class="row">
       <div class="space-25"> <label for="flag_color">Flag color:</label> </div>
-      <div class="space-75"> <input type="color" name="flag_color" required value={{ buggy['flag_color'] }}> </div>
+      <div class="space-75"> <input type="color" id="flag_color" name="flag_color" onchange="changeFlag()" required value={{ buggy['flag_color'] }}> </div>
     </div>
     <div class="row">
       <div class="space-25"> <label for="flag_color_secondary">Flag secondary color:</label> </div>
-      <div class="space-75"> <input type="color" name="flag_color_secondary" required value={{ buggy['flag_color_secondary'] }}> </div>
+      <div class="space-75"> <input type="color" id="flag_color_secondary" name="flag_color_secondary" onchange="changeFlag()" required value={{ buggy['flag_color_secondary'] }}> </div>
     </div>
     <div class="row">
       <div class="space-25"> <label for="flag_pattern">Flag pattern:</label> </div>
       <div class="space-75">
-        <select id="flag_pattern" name="flag_pattern" form="buggybuild" required>
+        <select id="flag_pattern" name="flag_pattern" form="buggybuild" onchange="changeFlag()" required>
           <option value="plain" {% if buggy['flag_pattern'] == "plain" %} selected {% endif %}>Plain</option>
           <option value="vstripe" {% if buggy['flag_pattern'] == "vstripe" %} selected {% endif %}>Vertical Stripes</option>
           <option value="hstripe" {% if buggy['flag_pattern'] == "hstripe" %} selected {% endif %}>Horizontal Stripes</option>
@@ -181,12 +181,46 @@
       </div>
     </div>
     <div class="row">
-      <div class="space-25"> <input type="submit" class="button" value="Submit new buggy"> </div>
+      <style> #flagTemp {width:100px; height:70px;} </style>
+      <style> #color1 {color:var(--colorMain);} </style>
+      <style> #color2 {color:var(--colorAlt);} </style>
+      <script>
+        document.getElementById("flag_color").addEventListener("change", changeFlag());
+
+        function changeFlag() {
+            var colorMain = document.getElementById('flag_color').value;
+            var colorAlt = document.getElementById('flag_color_secondary').value;
+            var flagPattern = document.getElementById('flag_pattern');
+            var elem = document.getElementById('flagTemp');
+
+            if(flagPattern.value == 'plain')
+              {
+              elem.style.background = colorMain;
+              }
+            else if (flagPattern.value == 'spot')
+              {
+              elem.style.backgroundColor = colorMain
+              elem.style.backgroundImage = 'radial-gradient(white 15%, transparent 16%), radial-gradient(white 15%, transparent 16%)';
+              elem.style.backgroundSize = '40px 40px';
+              elem.style.backgroundPosition = '0 0, 20px 20px';
+              }
+          };
+      </script>
+      <div class="space-25"> Flag: </div>
+      <div class="space-75">
+        <div id="flagTemp"> </div>
+      </div>
     </div>
     <div class="row">
-      <div class="space-25"> <a href="/" class="button">Back to home page</a> </div>
+      <div class="space-25"> <input type="submit" class="button" value="Submit new buggy"> </div>
     </div>
   </form>
 </div>
 
+
+<p>
+  <div class="row">
+      <div class="space-25"> <a href="/" class="button">Back to home page</a> </div>
+  </div>
+</p>
 {% endblock %}

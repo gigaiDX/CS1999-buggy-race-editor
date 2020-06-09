@@ -118,3 +118,7 @@ label {
   display: table;
   clear: both;
 }
+.flag {
+  width:100px;
+  height:70px;
+}
