@@ -197,6 +197,30 @@
               {
               elem.style.background = colorMain;
               }
+            else if (flagPattern.value == 'vstripe')
+              {
+              elem.style.backgroundColor = colorMain
+              elem.style.backgroundImage = 'linear-gradient(90deg, transparent 50%, rgba(255,255,255,.5) 50%)';
+              elem.style.backgroundSize = '10px 10px';
+              }
+            else if (flagPattern.value == 'hstripe')
+              {
+              elem.style.backgroundColor = colorMain
+              elem.style.backgroundImage = 'linear-gradient(transparent 50%, rgba(255,255,255,.5) 50%)';
+              elem.style.backgroundSize = '10px 10px';
+              }
+            else if (flagPattern.value == 'dstripe')
+              {
+              elem.style.backgroundColor = colorMain
+              elem.style.backgroundImage = 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.5) 10px, rgba(255,255,255,.5) 20px)';
+              }
+            else if (flagPattern.value == 'checker')
+              {
+              elem.style.backgroundColor = colorMain
+              elem.style.backgroundImage = 'linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black)';
+              elem.style.backgroundSize = '40px 40px';
+              elem.style.backgroundPosition = '0 0, 20px 20px';
+              }
             else if (flagPattern.value == 'spot')
               {
               elem.style.backgroundColor = colorMain
