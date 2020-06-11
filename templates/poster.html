@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .cs1999-tasks {
+    border-top: 1px solid black;
+    margin-top: 4em;
+  }
+  .cs1999-tasks .task {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+  .cs1999-tasks .task h2 {
+    border-bottom: 3px solid gray;
+  }
+  code {
+    background-color: #d8d2d2;
+  }
+</style>
+
+<!-- see tech note about the poster:  
+      https://rhul-cs-projects.github.io/CS1999-buggy-race-server/                -->
+<!--                                                                              -->
+<!-- anything you want here: make it beautiful! make it appealing! make it clear! -->
+<!-- you can drop images into static/assets if you want... and access them        -->
+<!-- here with <img src="/static/image-filename.png" alt="diagram" />             -->
+<!--                                                                              -->
+<!-- Of course you can edit static/app.css too if you want. It's your webserver,  -->
+<!--                                                                              -->
+<!-- Maybe... delete all these comments too :-)                                   -->
+
+
+<!-- below this point keep this section tag and paste in a <div> for every        -->
+<!-- task you attempted.                                                          -->
+<h1>Buggy Editor Info/Poster</h1>
+
+<div>
+  <h2><u>Features:</u></h2>
+  <div class="container">
+    <ul>
+      <li>Simple layout, easy to use editor</li>
+      <li>(Slightly) functional flag viewer in editor!</li>
+      <li>Multiple buggies can be created and stored</li>
+      <li>Created buggies can be viewed, edited and deleted within buggy viewer</li>
+      <li>In addition, JSON can be fetched of selected buggy</li>
+      <li>Automatic buggy cost calculation</li>
+      <li>Automatic rules validation</li>
+      <li style="text-decoration: line-through">The ability to possibly give you a brief chuckle</li>
+    </ul>
+  </div>
+</div>
+<section class="cs1999-tasks">
+  <div class="task">
+    <h2>0-GET</h2>
+    <p>
+      The original buggy editor repo was forked and a local clone was made on my machine with <code>git clone</code>.
+    </p>
+    <p>
+      With a local copy of the repo I could make changes to the code, commit them to version control and push them back to the repo on GitHub
+      along the way. Commits and pushes were generally done every new feature and notable change. For the first couple of commits, Git Bash was
+      used to commit and push but later on GitHub Desktop was used to speed up the workflow.
+    </p>
+  </div>
+  <div class="task">
+    <h2>0-RUN</h2>
+    <p>
+      Now armed with a copy of the repo, the next step was to make sure it ran.
+    </p>
+    <p>
+      Following the setup steps on the README, a virtual environment was created using <code>py -m venv venv</code> and activitated with
+      <code>.\venv\Scripts\activate</code>. The requisites were installed to the virtual environment with <code> pip install -r requirements.txt </code>
+      and the database was initiated with <code>py init_db.app</code>
+    </p>
+    <p>
+      Then, to actually get the app running, on Powershell the project's directory was <code>cd</code>'d int, the virtual environment was activated
+      with <code>.\venv\Scripts\activate</code>, flask environment set to development with <code>$env:FLASK_ENV = 'development'</code> and finally
+      the app was ran with <code>py app.py</code>. This booted up into the original editor on http://localhost:5000.
+    </p>
+  </div>
+  <div class="task">
+    <h2>0-RUN</h2>
+    <p>
+      Now armed with a copy of the repo, the next step was to make sure it ran.
+    </p>
+    <p>
+      Following the setup steps on the README, a virtual environment was created using <code>py -m venv venv</code> and activitated with
+      <code>.\venv\Scripts\activate</code>. The requisites were installed to the virtual environment with <code> pip install -r requirements.txt </code>
+      and the database was initiated with <code>py init_db.app</code>
+    </p>
+    <p>
+      Then, to actually get the app running, on Powershell the project's directory was <code>cd</code>'d int, the virtual environment was activated
+      with <code>.\venv\Scripts\activate</code>, flask environment set to development with <code>$env:FLASK_ENV = 'development'</code> and finally
+      the app was ran with <code>py app.py</code>. This booted up into the original editor on http://localhost:5000.
+    </p>
+  </div>
+  <div class="task">
+    <h2>0-CHANGE</h2>
+    <p>
+      As a basic test to see how editing works, the header of index.html was changed, committed and pushed to the repo
+      - as seen on <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/87d83d1">commit 87d83d1</a>.
+    </p>
+  </div>
+  <div class="task">
+    <h2>1-ADD</h2>
+    <p>
+      The first 'proper' task was to add in more fields to the form and database.
+    </p>
+    <p>
+      For this task, following what was previously done for qty_wheels, new input tags were added with their name (and ID when applicable)
+      assigned as their JSON name according to the specs sheet. In order to add the new inputs to the database, their values were requested
+      from the form and assigned to variables that were named the same as their respective field.
+    </p>
+    <p>
+      The new variables were then added to the SQL update command, alongside the templating for buggy.html and the fields into init_db.py.
+      However when attempting to add data to these new fields, they did not appear to be updated - this was due to the fact the database
+      hadn't actually been updated to include the new fields. 
+    </p>
+    <p>
+      Thus, an update script update_db.py was made to add the new fields (and subsequent fields) to the database. This script uses
+      the SQL ALTER TABLE commands to add a new field to the table and also includes the ability to drop the new field with a (relatively long)
+      series of commands to create a new dummy table with all previous fields except the new one, fill it in with the data that the previous
+      table had, drops the old buggies table and renames the new dummy table to buggies. 
+    </p>
+  </div>
+  <div class="task">
+    <h2>1-VALID</h2>
+    <p>
+      In order to make sure the script doesn't error due to unwanted inputs, data validation is needed.
+    </p>
+    <p>
+      For this, a couple if statements were added to app.py before the data is added to the database. It first checks whether 
+      qty_wheels is meant to be with <code>if qty_wheels.isdigit()</code>. If this returns true it then does another check whether
+      qty_wheels is an even number, as per the game rules, done with <code>if int(qty_wheels) % 2 != 0</code>
+    </p>
+    <p>
+      Originally when a rules violation occured, the updated.html template was returned with a message saying what went wrong.
+      This worked temporarily, however it didn't cause the page to rollback - this caused some problems later in #2-EDIT.
+
+    </p>
+  </div>
+  <div class="task">
+    <h2>1-STYLE</h2>
+    <p>
+      Changing the style and layout happened naturally over the course of the project as tweaks to how things were
+      laid out and how they looked arose over time.
+    </p>
+    <p>
+      While not strictly to do with the CSS, the first change was putting the inputs on buggy-form.html into a table,
+      seperating them into categories where they were relatively related. This was done by using the <code>table</code> tag
+      and multiple <code>tr</code> rows (as seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/fa60838">commit fa60838</a>.
+    </p>
+    <p>
+      The first proper change to the CSS was to make input boxes a bit more consistent. Originally, number input text boxes were made smaller
+      (since it was unlikely for the number to be extremely long) and the select boxed were made to be the exact same size as other inputs,
+      including font size. This can be seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/c3678e7">commit c3678e7</a>.
+    </p>
+    <p>
+      Further layout and css tweaks were made in #2-FORM
+    </p>
+  </div>
+  <div class="task">
+    <h2>2-EDIT</h2>
+    <p>
+      In order to make editing a little easier, the form could be automatically filled using values from the database.
+    </p>
+    <p>
+      To do this, when a GET request is made, the data from the buggies is selected via the SQL command <code>SELECT * FROM buggies</code>.
+      The data is fetched by the python method <code>fetchone()</code> and buggy-form.html is returned with the data set to a variable for
+      the form to use. 
+    </p>
+    <p>
+      In buggy-form.html, jinja templating is used to pull specific data from the database that its been parsed via the aforementioned return.
+      To make the form 'automatically' fill with the data, each inputs value has been assigned to its corresponding piece of data.
+    </p>
+    <p>
+      For select and radio inputs, a direct value cannot so easily be assigned as <code>option</code> tags work differently. So in order
+      to have the form automatically select the correct value from the database, each option has an if statement (again using jinja templating)
+      to check whether or not the corresponding data is the option's value - if so, it will be given the <code>selected</code> attribute.
+    </p>
+    <p>
+      These changes can first be seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/31bc2af">commit 31bc2af</a> and
+      subsequent additions of fields afterwards.
+    </p>
+  </div>
+  <div class="task">
+    <h2>2-FORM</h2>
+    <p>
+      At this point buggy-form.html looked decent and seemed logical in its layout, however it was lacking the consistency that I was looking for.
+      This meant a huge overhaul to its layout and CSS, this time using a series of differently classed <code>div</code> tags to make a surrounding
+      container that held uniform rows and lined up input boxes. The uniform spacing was done with two different css classes <code>space-25</code>
+      and <code>space-75</code> - as the naming suggests, these classes make the width of its assigned tag 25% and 75% respectively. This means
+      I can assign a div with class <code>space-25</code> to contain the label and a div with class <code>space-75</code> to contain the input -
+      therefore, keeping all parts uniform with each other. These changes can be seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/c66b6b2">commit c66b6b2</a>.
+    </p>
+    <p>
+      Included in the same commit was implementations of images - a new button border featuring the warning tape pattern (found as warning.png in the 
+      static folder) and our favourite neighbourhood roadent on the index screen.
+    </p>
+    <p>
+      Another addition was a "go back" button to updated.html, which performs a script to go back in the window - this prevents inputs being lost
+      in case of an error.
+    <p>
+      In reflection, more could be done to make the editing process easier - such as giving real-time feedback to the user if something will cause an error.
+    </p>
+  </div>
+  <div class="task">
+    <h2>2-COST</h2>
+    <p>
+      As per game rules, the total cost of the buggy is important to know to make sure it's legal for a race.
+    </p>
+    <p>
+      In order to do this, an entire section to calculate cost was added to app.py - alongside multiple new tables to the database containing data
+      of each part and their attributes. As usual when dealing with the database, the tables are fetched using SQL SELECT (e.g for power, 
+      <code>SELECT name, cost FROM powerDetail</code>) and then the relevant data needed is fetched by a for loop. Once fetched, the total cost is calculated
+      and added to the buggies table. This can be seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/0618565">commit 0618565</a>.
+    </p>
+  </div>
+  <div class="task">
+    <h2>2-RULES</h2>
+    <p>
+      This task was similar to #1-VALID in that rules needed to be checked, but as mentioned in the notes there the original way to return an error
+      caused some issues with properly rolling back.To fix this, the return statements were replaced with <code>raise TypeError</code> or <code>raise ValueError</code> 
+      to cause <code>except</code> to trigger and rollback while returning updated.html with a suitable error message.
+    </p>
+    <p>
+      Alongside, some extra rules validation was added according to consumable power type - however, more probably should've been added to reduce the ways the code
+      would break down if the form was tampered with.
+    </p> 
+  </div>
+  <div class="task">
+    <h2>3-MULTI</h2>
+    <p>
+      In order to allow for multiple buggies to be saved, app.py was changed so that it checks first if the hidden input buggy_id on buggy-form.html is a digit and if so,
+      updates the pre-existing buggy. If it is empty, it will insert an entirely new buggy into the table with the data given in buggy-form.html. 
+    </p>
+    <p>
+      To allow access to editing pre-existing buggies, buggy.html was edited so that it shows all buggies in the table and includes buttons to edit, get JSON (and later delete).
+      The edit button links towards "/edit/" with its specific buggy_id, which the function edit_buggy uses to fill in the pre-existing data into the form.
+      This can be seen in <a href="https://github.com/gigaiDX/CS1999-buggy-race-editor/commit/6965c6e">commit c6965c6e</a>.
+    </p>
+  </div>
+  <div class="task">
+    <h2>3-DELETE</h2>
+    <p>
+      As mentioned in #3-MULTI, a delete button was added to the buggy.html screen to allow for buggy deletion. This works by linking to "/delete/" that,
+      similar to edit, uses the buggy_id to know which buggy to delete. If a GET request is received, it boots to a screen for confirmation that includes
+      a form with the POST method so that if the delete button is pressed there, a POST request is received and the specific buggy is deleted
+      via the sql command <code>DELETE FROM buggies WHERE id=?", (buggy_id)</code>
+    </p>
+  </div>
+  <div class="task">
+    <h2>3-FLAG</h2>
+    <p>
+      For the main submission, #3-FLAG is barely implemented and even in this current submission it just barely functions.
+    </p>
+    <p>
+      In order to make the flag react in real time to changes in flag colours, an EventListener was added that performs the function
+      <code>changeFlag()</code>. In its current state, this function assigns the current values for colors and pattern then changes the style
+      of a dummy class called flagTemp according to the pattern chosen and the colors. This class is then assigned as an ID to a blank div, meaning
+      a representation of the flag appears once a change occurs.
+    </p>
+    <p>
+      One problem was getting the pattern to use the secondary color, however this might be solved by using variable classes in the CSS and changing
+      and assigning those within the pattern attributes. An attempt was made to do this in this current version of the editor, however it has not
+      been implemented fully.
+    </p>
+  </div>
+<!-- this closes the section: keep it in! -->
+</section>
+<div>
+  <a href="/" class="button">Back to home page</a>
+  <a href="/buggy" class="button">See buggies</a>
+</div>
+<img src="../static/roadent.png" class="roadent" style="position:sticky;left:120vw; height:10%; width:10%">
+{% endblock %}
